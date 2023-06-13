@@ -8,7 +8,7 @@ import { BN } from '@polkadot/util';
 
 import { postData } from '../../../util/api';
 import { TRACK_LIMIT_TO_LOAD_PER_REQUEST } from './consts';
-import { LatestReferenda, Origins, ReferendumPolkassembly, ReferendumSubScan, TopMenu } from './types';
+import { LatestReferendaPA, Origins, ReferendumPolkassembly, ReferendumSubScan, TopMenu } from './types';
 
 export const LOCKS = [1, 10, 20, 30, 40, 50, 60];
 export interface Statistics {
@@ -135,7 +135,7 @@ export async function getReferendumVotesFromSubscan(chainName: string, referendu
   });
 }
 
-export async function getLatestReferendums(chainName: string, listingLimit = 30): Promise<LatestReferenda[] | null> {
+export async function getLatestReferendumsPA(chainName: string, listingLimit = 30): Promise<LatestReferendaPA[] | null> {
   console.log(`Getting Latest referendum on ${chainName} from PA ...`);
 
   const requestOptions = {
@@ -158,7 +158,42 @@ export async function getLatestReferendums(chainName: string, listingLimit = 30)
       }
     })
     .catch((error) => {
-      console.log(`Error getting latest referendum on ${chainName}:`, error.message);
+      console.log(`Error getting latest referendum on ${chainName} from PA:`, error.message);
+
+      return null;
+    });
+}
+
+export async function getLatestReferendumsSb(chainName: string, listingLimit = 30): Promise<LatestReferendaPA[] | null> {
+  console.log(`Getting Latest referendum on ${chainName} from Sb ...`);
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  fetch(`https://${chainName}.api.subscan.io/api/scan/referenda/referendums`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // 'X-API-Key': 'YOUR_KEY'
+    },
+    body: JSON.stringify({
+      row: listingLimit,
+      // status: 'completed'
+    })
+  }).then(response => response.json())
+    .then((data) => {
+      console.log('data::::', data)
+      if (data.posts?.length) {
+        console.log(`Latest referendum on ${chainName} from PA:`, data.posts);
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return data.posts;
+      } else {
+        console.log(`Fetching message ${data}`);
+
+        return null;
+      }
+    })
+    .catch((error) => {
+      console.log(`Error getting latest referendum on ${chainName} from Sb:`, error.message);
 
       return null;
     });
@@ -190,7 +225,7 @@ export async function getAllVotesFromPA(chainName: string, refIndex: number, lis
     });
 }
 
-export async function getTrackOrFellowshipReferendumsPA(chainName: string, page = 1, track?: number): Promise<LatestReferenda[] | null> {
+export async function getTrackOrFellowshipReferendumsPA(chainName: string, page = 1, track?: number): Promise<LatestReferendaPA[] | null> {
   console.log(`Getting refs on ${chainName} track:${track} from PA`);
 
   const requestOptions = {
@@ -199,7 +234,10 @@ export async function getTrackOrFellowshipReferendumsPA(chainName: string, page 
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return fetch(`https://api.polkassembly.io/api/v1/listing/on-chain-posts?page=${page}&proposalType=${track ? 'referendums_v2' : 'fellowship_referendums'}&listingLimit=${TRACK_LIMIT_TO_LOAD_PER_REQUEST}&trackNo=${track}&trackStatus=All&sortBy=newest`, requestOptions)
-    .then((response) => response.json())
+    .then((response) => {
+      console.log('response:', response)
+      return response.json()
+    })
     .then((data) => {
       if (data.posts?.length) {
         console.log(`Referendums on ${chainName}/ track:${track} from PA:`, data.posts);

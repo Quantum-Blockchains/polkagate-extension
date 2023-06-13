@@ -11,11 +11,11 @@ import { useTranslation } from '../../hooks';
 import { HeaderBrand } from '../../partials';
 import { NameAddress, TransactionDetail } from '../../util/types';
 import { accountName, amountToMachine, toShortAddress, upperCaseFirstChar } from '../../util/utils';
-import Explorer from './Explorer';
 import Amount from './partials/Amount';
 import FailSuccessIcon from './partials/FailSuccessIcon';
 import Item from './partials/Item';
 import ToFrom from './partials/ToFrom';
+import Explorer from './Explorer';
 
 interface Props {
   chainName: string;

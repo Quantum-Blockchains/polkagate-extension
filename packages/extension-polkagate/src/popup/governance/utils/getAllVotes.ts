@@ -5,7 +5,7 @@ import { ApiPromise } from '@polkadot/api';
 import { BN } from '@polkadot/util';
 import { encodeAddress } from '@polkadot/util-crypto';
 
-import { LatestReferenda, Origins } from './types';
+import { LatestReferendaPA, Origins } from './types';
 
 export const LOCKS = [1, 10, 20, 30, 40, 50, 60];
 

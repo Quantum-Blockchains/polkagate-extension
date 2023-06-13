@@ -11,12 +11,12 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { useApi, useChainName, useDecidingCount, useFullscreen, useTracks, useTranslation } from '../../hooks';
+import { useApi, useChainName, useDecidingCount, useFullscreen, useReferendaList, useTracks, useTranslation } from '../../hooks';
 import HorizontalWaiting from './components/HorizontalWaiting';
 import { getAllVotes } from './post/myVote/util';
 import { LATEST_REFERENDA_LIMIT_TO_LOAD_PER_REQUEST } from './utils/consts';
-import { getLatestReferendums, getReferendumsListSb, getTrackOrFellowshipReferendumsPA, Statistics } from './utils/helpers';
-import { LatestReferenda } from './utils/types';
+import { getLatestReferendumsPA, getLatestReferendumsSb, getReferendumsListSb, getTrackOrFellowshipReferendumsPA, Statistics } from './utils/helpers';
+import { LatestReferendaPA } from './utils/types';
 import { AllReferendaStats } from './AllReferendaStats';
 import Bread from './Bread';
 import FellowshipsList from './FellowshipsList';
@@ -35,6 +35,7 @@ export default function Governance(): React.ReactElement {
   const history = useHistory();
   const theme = useTheme();
   const { address, topMenu } = useParams<{ address: string, topMenu: 'referenda' | 'fellowship' }>();
+
   const api = useApi(address);
   const chainName = useChainName(address);
   const decidingCounts = useDecidingCount(address);
@@ -46,13 +47,15 @@ export default function Governance(): React.ReactElement {
   const [selectedSubMenu, setSelectedSubMenu] = useState<string>(state?.selectedSubMenu || 'All');
   const [referendumCount, setReferendumCount] = useState<{ referenda: number | undefined, fellowship: number | undefined }>({ fellowship: undefined, referenda: undefined });
   const [referendumStats, setReferendumStats] = useState<Statistics | undefined>();
-  const [referenda, setReferenda] = useState<LatestReferenda[] | null>();
-  const [filteredReferenda, setFilteredReferenda] = useState<LatestReferenda[] | null>();
+  const [referendaList, setReferendaList] = useState<LatestReferendaPA[] | null>();
+  const [filteredReferenda, setFilteredReferenda] = useState<LatestReferendaPA[] | null>();
   const [getMore, setGetMore] = useState<number | undefined>();
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>();
   const [myVotedReferendaIndexes, setMyVotedReferendaIndexes] = useState<number[] | null>();
   const [fellowships, setFellowships] = useState<Fellowship[] | null>();
   const [notSupportedChain, setNotSupportedChain] = useState<boolean>();
+
+  // const referenda = useReferendaList(pageTrackRef, setFilteredReferenda, setIsLoadingMore,getMore, selectedSubMenu);
 
   const referendaTrackId = tracks?.find((t) => String(t[1].name) === selectedSubMenu.toLowerCase().replace(' ', '_'))?.[0]?.toNumber();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -90,7 +93,7 @@ export default function Governance(): React.ReactElement {
       // to reset refs on non supported chain, or when chain has changed
       pageTrackRef.current.page = 1;
       pageTrackRef.current.listFinished = false;
-      
+
       return;
     }
 
@@ -119,11 +122,11 @@ export default function Governance(): React.ReactElement {
     chainName && selectedSubMenu && fetchRef().catch(console.error);
 
     async function fetchRef() {
-      let list = referenda;
+      let list = referendaList;
 
       // Reset referenda list on menu change
       if (isSubMenuChanged || isTopMenuChanged) {
-        setReferenda(undefined);
+        setReferendaList(undefined);
         setFilteredReferenda(undefined);
         list = [];
         pageTrackRef.current.subMenu = selectedSubMenu; // Update the ref with new values
@@ -138,13 +141,14 @@ export default function Governance(): React.ReactElement {
       pageTrackRef.current.topMenu = topMenu;
 
       if (topMenu === 'referenda' && selectedSubMenu === 'All') {
-        const allReferenda = await getLatestReferendums(chainName, pageTrackRef.current.page * LATEST_REFERENDA_LIMIT_TO_LOAD_PER_REQUEST);
+        const allReferendaSb = await getLatestReferendumsSb(chainName, pageTrackRef.current.page * LATEST_REFERENDA_LIMIT_TO_LOAD_PER_REQUEST);
+        const allReferenda = await getLatestReferendumsPA(chainName, pageTrackRef.current.page * LATEST_REFERENDA_LIMIT_TO_LOAD_PER_REQUEST);
 
         setIsLoadingMore(false);
 
         if (allReferenda === null) {
           if (pageTrackRef.current.page === 1) { // there is no referendum !!
-            setReferenda(null);
+            setReferendaList(null);
 
             return;
           }
@@ -155,9 +159,9 @@ export default function Governance(): React.ReactElement {
         }
 
         // filter discussions if any
-        const onlyReferenda = allReferenda.filter((r) => r.type !== 'Discussions');
+        const onlyReferenda = allReferenda.filter((r: LatestReferendaPA) => r.type !== 'Discussions');
 
-        setReferenda(onlyReferenda);
+        setReferendaList(onlyReferenda);
 
         return;
       }
@@ -168,7 +172,7 @@ export default function Governance(): React.ReactElement {
 
       if (resPA === null) {
         if (pageTrackRef.current.page === 1) { // there is no referendum for this track
-          setReferenda(null);
+          setReferendaList(null);
 
           return;
         }
@@ -185,12 +189,12 @@ export default function Governance(): React.ReactElement {
       const concatenated = (list || []).concat(resPA);
 
       console.log('concatenated:', concatenated);
-      setReferenda([...concatenated]);
+      setReferendaList([...concatenated]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainName, fellowshipTracks, getMore, isSubMenuChanged, isTopMenuChanged, referendaTrackId, selectedSubMenu, topMenu, tracks]);
 
-  const addFellowshipOriginsFromSb = useCallback(async (resPA: LatestReferenda[]): Promise<LatestReferenda[] | undefined> => {
+  const addFellowshipOriginsFromSb = useCallback(async (resPA: LatestReferendaPA[]): Promise<LatestReferendaPA[] | undefined> => {
     const resSb = await getReferendumsListSb(chainName, topMenu, pageTrackRef.current.page * LATEST_REFERENDA_LIMIT_TO_LOAD_PER_REQUEST);
 
     if (resSb) {
@@ -270,7 +274,7 @@ export default function Governance(): React.ReactElement {
             <SearchBox
               address={address}
               myVotedReferendaIndexes={myVotedReferendaIndexes}
-              referenda={referenda}
+              referenda={referendaList}
               setFilteredReferenda={setFilteredReferenda}
             />
           }
@@ -302,7 +306,7 @@ export default function Governance(): React.ReactElement {
                                 {t('Open Governance is not supported on the {{chainName}}', { replace: { chainName } })}
                               </Typography>
                               : <Typography color='secondary.contrastText' fontSize='18px' fontWeight={600} onClick={getMoreReferenda}>
-                                {t('{{count}} out of {{referendumCount}} referenda loaded. Click here to load more', { replace: { count: referenda?.length || 0, referendumCount: referendumCount[topMenu] } })}
+                                {t('{{count}} out of {{referendumCount}} referenda loaded. Click here to load more', { replace: { count: referendaList?.length || 0, referendumCount: referendumCount[topMenu] } })}
                               </Typography>
                             }
                           </Grid>

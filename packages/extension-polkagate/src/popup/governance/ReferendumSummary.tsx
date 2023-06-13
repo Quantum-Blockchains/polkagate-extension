@@ -17,14 +17,14 @@ import DecisionDeposit from './post/decisionDeposit';
 import PayDecisionDeposit from './post/decisionDeposit/PayDecisionDeposit';
 import VoteChart from './post/VoteChart';
 import { STATUS_COLOR } from './utils/consts';
-import { LatestReferenda } from './utils/types';
+import { LatestReferendaPA } from './utils/types';
 import { capitalizeFirstLetter, formalizedStatus, formatRelativeTime, pascalCaseToTitleCase } from './utils/util';
 
 interface Props {
   address: string;
   key: number;
   onClick: () => void;
-  refSummary: LatestReferenda;
+  refSummary: LatestReferendaPA;
   myVotedReferendaIndexes: number[] | null | undefined;
 }
 

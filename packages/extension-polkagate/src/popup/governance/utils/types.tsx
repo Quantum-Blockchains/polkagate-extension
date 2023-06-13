@@ -189,7 +189,7 @@ export interface Proposal {
   bond: number;
 }
 
-export interface LatestReferenda {
+export interface LatestReferendaPA {
   created_at: string;
   description: string;
   hash: string;
@@ -204,6 +204,24 @@ export interface LatestReferenda {
   type: string;
   fellowship_origins?: string;
   fellowship_origins_id?: number
+}
+
+export interface LatestReferendaSb {
+  referendum_index: number;
+  created_block: number;
+  created_block_timestamp: number;
+  origins_id: number;
+  origins: string;
+  account: {
+    address: string;
+    display: string;
+    identity: boolean;
+  };
+  call_module: string;
+  call_name: string;
+  status: string;
+  latest_block_num: number;
+  latest_block_timestamp: number;
 }
 
 export type Track = [

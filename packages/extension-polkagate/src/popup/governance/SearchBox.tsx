@@ -13,12 +13,12 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Checkbox2, InputFilter, Select } from '../../components';
 import { useFormatted, useTranslation } from '../../hooks';
 import { REFERENDA_STATUS } from './utils/consts';
-import { LatestReferenda } from './utils/types';
+import { LatestReferendaPA } from './utils/types';
 
 interface Props {
   address: string;
-  referenda: LatestReferenda[] | null | undefined;
-  setFilteredReferenda: React.Dispatch<React.SetStateAction<LatestReferenda[] | null | undefined>>;
+  referenda: LatestReferendaPA[] | null | undefined;
+  setFilteredReferenda: React.Dispatch<React.SetStateAction<LatestReferendaPA[] | null | undefined>>;
   myVotedReferendaIndexes: number[] | null | undefined;
 }
 
