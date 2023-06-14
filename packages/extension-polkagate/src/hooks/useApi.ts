@@ -17,11 +17,11 @@ export default function useApi(address: AccountId | string | undefined, stateApi
   const [api, setApi] = useState<ApiPromise | undefined>(stateApi);
 
   useEffect(() => {
-    if (api?.isConnected) {
+    if (api?.isConnected || !chain?.genesisHash) {
       return;
     }
 
-    if (chain?.genesisHash && apisContext?.apis[chain.genesisHash]) {
+    if (apisContext?.apis[chain.genesisHash]) {
       const savedApi = apisContext.apis[chain.genesisHash].api;
 
       if (savedApi?.isConnected) {
@@ -31,19 +31,27 @@ export default function useApi(address: AccountId | string | undefined, stateApi
       }
     }
 
-    if (!endpoint) {
+    if (!endpoint || apisContext?.apis[String(chain.genesisHash)]?.isRequested) {
+      console.log(' APi is already requested, wait ... ))');
       return;
     }
 
+    console.log(' I passed the barrier  .... ))');
+
+    apisContext.apis[chain.genesisHash] = { isRequested: true };
+    apisContext.setIt(apisContext.apis);
+    
     const wsProvider = new WsProvider(endpoint);
 
     ApiPromise.create({ provider: wsProvider }).then((api) => {
+      console.log(' my mission is completed .... ))');
+
       setApi(api);
 
-      apisContext.apis[String(api.genesisHash.toHex())] = { api, endpoint };
+      apisContext.apis[String(api.genesisHash.toHex())] = { api, endpoint, isRequested: false };
       apisContext.setIt(apisContext.apis);
     }).catch(console.error);
-  }, [apisContext, endpoint, stateApi, chain, api]);
+  }, [apisContext, endpoint, stateApi, chain, api?.isConnected]);
 
   return api;
 }
