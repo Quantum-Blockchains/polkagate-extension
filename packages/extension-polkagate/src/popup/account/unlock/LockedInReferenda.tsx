@@ -72,6 +72,8 @@ export default function LockedInReferenda({ address, refresh, setRefresh }: Prop
   useEffect(() => {
     if (refresh) {
       setLockedInReferenda(undefined); // TODO: needs double check
+      setUnlockableAmount(undefined);
+      setTimeToUnlock(undefined);
     }
 
     if (referendaLocks === null) {
