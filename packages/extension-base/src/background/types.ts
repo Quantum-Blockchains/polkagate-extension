@@ -89,7 +89,7 @@ export interface RequestSignatures {
   'pri(accounts.create.suri)': [RequestAccountCreateSuri, boolean];
   'pri(accounts.edit)': [RequestAccountEdit, boolean];
 
-  'pri(accounts.updateMeta)': [RequestUpdateMeta, boolean]; // added for plus
+  'pri(accounts.updateMeta)': [RequestUpdateMeta, boolean]; // added for polkagate
 
   'pri(accounts.export)': [RequestAccountExport, ResponseAccountExport];
   'pri(accounts.batchExport)': [RequestAccountBatchExport, ResponseAccountsExport]

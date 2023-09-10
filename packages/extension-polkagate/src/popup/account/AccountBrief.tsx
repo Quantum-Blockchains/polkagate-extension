@@ -23,12 +23,13 @@ import { useAccount, useChainName, useFormatted, useTranslation } from '../../ho
 
 interface Props {
   address: string;
+  addressPL?: string;
   identity: DeriveAccountRegistration | null | undefined
   showName?: boolean;
   showDivider?: boolean;
 }
 
-function AccountBrief({ address, identity, showName = true, showDivider = true }: Props): React.ReactElement<Props> {
+function AccountBrief({ address, identity, showDivider = true, showName = true, addressPL = '10px' }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const formatted = useFormatted(address);
   const account = useAccount(address);
@@ -54,7 +55,7 @@ function AccountBrief({ address, identity, showName = true, showDivider = true }
           </Typography>
         </Grid>
       }
-      <Grid alignItems='center' container item justifyContent='space-between' px='10px'>
+      <Grid alignItems='center' container item justifyContent='space-between' pl={addressPL} pr='10px'>
         <Grid item sx={{ width: '84%' }}>
           <ShortAddress2 address={formatted} charsCount={19} showCopy style={{ fontSize: '10px', fontWeight: 300 }} />
         </Grid>

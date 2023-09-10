@@ -79,13 +79,10 @@ export default function Others({ address, balances, chain, identity, setShow, sh
             <Divider sx={{ bgcolor: 'secondary.main', height: '2px' }} />
           </Grid>
         </Container>
-        <Container disableGutters sx={{ maxHeight: `${parent.innerHeight - 150}px`, overflowY: 'auto', px: '15px' }}>
+        <Container disableGutters sx={{ maxHeight: `${parent.innerHeight - 150}px`, overflowY: 'auto'}}>
           {chain?.genesisHash && STAKING_CHAINS.includes(chain.genesisHash) &&
             <LabelBalancePrice address={address} balances={balances} label={'Free Balance'} />
           }
-          {/* {chain?.genesisHash && !GOVERNANCE_CHAINS.includes(chain.genesisHash) &&
-            <LabelBalancePrice address={address} balances={balances} label={'Locked Balance'} />
-          } */}
           <LabelBalancePrice address={address} balances={balances} label={'Voting Balance'} />
         </Container>
       </Popup>

@@ -553,7 +553,7 @@ export default class Extension {
       case 'pri(accounts.create.suri)':
         return this.accountsCreateSuri(request as RequestAccountCreateSuri);
 
-      case 'pri(accounts.updateMeta)': // added for plus 
+      case 'pri(accounts.updateMeta)': // added for polkagate 
         return this.accountsUpdateMeta(request as RequestUpdateMeta);
 
       case 'pri(accounts.changePassword)':

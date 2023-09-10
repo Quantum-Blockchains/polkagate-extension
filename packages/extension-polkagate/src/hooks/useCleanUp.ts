@@ -34,7 +34,7 @@ export default function useCleanUp(accounts: AccountJson[] | undefined, address:
     const account = accounts?.find((acc) => acc.address === address);
 
     if (!account) {
-      console.log('no coresponding account found!');
+      console.log('no corresponding account found!');
 
       return;
     }

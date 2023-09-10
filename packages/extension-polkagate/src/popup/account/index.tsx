@@ -150,19 +150,17 @@ export default function AccountDetails(): React.ReactElement {
   }, []);
 
   const OthersRow = () => (
-    <Grid item py='3px'>
-      <Grid alignItems='center' container justifyContent='space-between'>
-        <Grid item sx={{ fontSize: '16px', fontWeight: 300 }} xs={3}>
-          {t('Others')}
-        </Grid>
-        <Grid item textAlign='right' xs={1.5}>
-          <IconButton
-            onClick={goToOthers}
-            sx={{ p: 0 }}
-          >
-            <ArrowForwardIosRoundedIcon sx={{ color: 'secondary.light', fontSize: '26px', stroke: theme.palette.secondary.light, strokeWidth: 1 }} />
-          </IconButton>
-        </Grid>
+    <Grid alignItems='center' container justifyContent='space-between' sx={{ bgcolor: 'background.paper', border: ` 1px solid ${theme.palette.secondary.main}`, mx: '15px', px: '10px', py: '10px', borderRadius: '5px', mt: '4px', width: '92%' }}>
+      <Grid item sx={{ fontSize: '16px', fontWeight: 300 }} xs={3}>
+        {t('Others')}
+      </Grid>
+      <Grid item textAlign='right' xs={1.5}>
+        <IconButton
+          onClick={goToOthers}
+          sx={{ p: 0 }}
+        >
+          <ArrowForwardIosRoundedIcon sx={{ color: 'secondary.light', fontSize: '26px', stroke: theme.palette.secondary.light, strokeWidth: 1 }} />
+        </IconButton>
       </Grid>
     </Grid>
   );
@@ -180,9 +178,11 @@ export default function AccountDetails(): React.ReactElement {
         showAccountMenu
         showBackArrow
       />
-      <Container disableGutters sx={{ px: '15px' }}>
-        <AccountBrief address={address} identity={identity} showDivider={false} showName={false} />
-        <Grid container justifyContent='space-between'>
+      <Container disableGutters>
+        <Grid height='33px' item sx={{ px: '15px' }}>
+          <AccountBrief address={address} identity={identity} showDivider={false} showName={false} addressPL='0px' />
+        </Grid>
+        <Grid container justifyContent='space-between' sx={{ px: '15px' }}>
           <Chain
             address={address}
             defaultValue={chain?.genesisHash ?? genesisOptions[0].text}
@@ -199,9 +199,12 @@ export default function AccountDetails(): React.ReactElement {
             style={{ width: '35%' }}
           />
         </Grid>
-        <Divider sx={{ bgcolor: 'secondary.main', height: '2px', mt: '9px' }} />
+        {/* <Divider sx={{ bgcolor: 'secondary.main', height: '2px', mt: '9px' }} /> */}
         {!showStakingOptions
-          ? <Grid item pt='10px' sx={{ height: window.innerHeight - 208, overflowY: 'scroll' }} xs>
+          ? <Grid item pt='2px' sx={{
+            height: window.innerHeight - 199, overflowY: 'scroll', opacity: 0.9,
+            background: `linear-gradient(180deg, rgba(153, 0, 79, 0.00) 0%, rgba(153, 0, 79, 0.46) 19.25%, rgba(153, 0, 79, 0.00) 110.71%)`
+          }} xs>
             {assetId !== undefined
               ? <LabelBalancePrice address={address} balances={balanceToShow} label={'Balance'} />
               : < >
@@ -225,7 +228,7 @@ export default function AccountDetails(): React.ReactElement {
           </Grid>
           : <StakingOption showStakingOptions={showStakingOptions} />
         }
-        <Grid container justifyContent='space-around' sx={{ bgcolor: 'background.default', borderTop: '2px solid', borderTopColor: 'secondary.main', bottom: 0, height: '62px', left: '4%', position: 'absolute', pt: '7px', pb: '5px', width: '92%' }} >
+        <Grid container justifyContent='space-around' sx={{ bgcolor: 'background.default', borderTop: '2px solid', borderTopColor: 'secondary.main', bottom: 0, height: '62px', left: '4%', position: 'absolute', pt: '7px', pb: '5px', px: '15px', width: '92%' }} >
           <HorizontalMenuItem
             divider
             icon={

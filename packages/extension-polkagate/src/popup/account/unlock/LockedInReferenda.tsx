@@ -12,7 +12,7 @@ import type { PalletBalancesBalanceLock } from '@polkadot/types/lookup';
 
 import { faUnlockAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Divider, Grid, useTheme } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { BN, BN_MAX_INTEGER, BN_ZERO } from '@polkadot/util';
@@ -161,46 +161,43 @@ export default function LockedInReferenda({ address, refresh, setPageLoading, se
 
   return (
     <>
-      <Grid item pt='3px' pb='2px'>
-        <Grid alignItems='flex-end' container justifyContent='space-between'>
-          <Grid item sx={{ fontSize: '16px', fontWeight: 300 }} xs={5.2}>
-            {t('Locked in Referenda')}
+      <Grid alignItems='center' container justifyContent='space-between' sx={{ bgcolor: 'background.paper', border: ` 1px solid ${theme.palette.secondary.main}`, mx: '15px', px: '10px', pt: '13px', pb: '5px', borderRadius: '5px', mt: '4px', width: '92%' }}>
+        <Grid item sx={{ fontSize: '16px', fontWeight: 300 }} xs={5.5}>
+          {t('Locked in Referenda')}
+        </Grid>
+        <Grid alignItems='flex-end' container direction='column' item xs>
+          <Grid item sx={{ fontSize: '20px', fontWeight: 400, lineHeight: '20px' }} textAlign='right'>
+            <ShowBalance api={api} balance={totalLocked} decimal={decimal} decimalPoint={2} token={token} />
           </Grid>
-          <Grid alignItems='flex-end' container direction='column' item xs>
-            <Grid item sx={{ fontSize: '20px', fontWeight: 400, lineHeight: '20px' }} textAlign='right'>
-              <ShowBalance api={api} balance={totalLocked} decimal={decimal} decimalPoint={2} token={token} />
-            </Grid>
-            <Grid item pt='6px' sx={{ lineHeight: '15px' }}>
-              <FormatPrice
-                amount={totalLocked}
-                decimals={decimal}
-                price={price?.amount}
-              />
-            </Grid>
-          </Grid>
-          <Grid alignItems='center' container item justifyContent='flex-end' sx={{ cursor: unlockableAmount && !unlockableAmount.isZero() && 'pointer', ml: '8px', width: '26px' }}>
-            <FontAwesomeIcon
-              color={!unlockableAmount || unlockableAmount.isZero() ? theme.palette.action.disabledBackground : theme.palette.secondary.light}
-              icon={faUnlockAlt}
-              onClick={unlockableAmount && !unlockableAmount.isZero() ? onUnlock : noop}
-              shake={shake}
-              style={{ height: '25px' }}
-            />
-          </Grid>
-          <Grid container item justifyContent='flex-end' pt='6px' sx={{ fontSize: '12px', lineHeight: '15px', mr: '33px' }}>
-            <ShowValue
-              height={15}
-              value={api && unlockableAmount && !unlockableAmount.isZero()
-                ? `${api.createType('Balance', unlockableAmount).toHuman()} can be unlocked`
-                : delegatedBalance && !delegatedBalance.isZero()
-                  ? t('Locked as delegated')
-                  : timeToUnlock === null ? '' : timeToUnlock}
-              width='50%'
+          <Grid item pt='6px' sx={{ lineHeight: '10px' }}>
+            <FormatPrice
+              amount={totalLocked}
+              decimals={decimal}
+              price={price?.amount}
             />
           </Grid>
         </Grid>
+        <Grid alignItems='center' container item justifyContent='flex-end' sx={{ cursor: unlockableAmount && !unlockableAmount.isZero() && 'pointer', ml: '8px', width: '26px' }}>
+          <FontAwesomeIcon
+            color={!unlockableAmount || unlockableAmount.isZero() ? theme.palette.action.disabledBackground : theme.palette.secondary.light}
+            icon={faUnlockAlt}
+            onClick={unlockableAmount && !unlockableAmount.isZero() ? onUnlock : noop}
+            shake={shake}
+            style={{ height: '25px' }}
+          />
+        </Grid>
+        <Grid container item justifyContent='flex-end' pt='6px' sx={{ fontSize: '12px', lineHeight: '15px', mr: '33px' }}>
+          <ShowValue
+            height={15}
+            value={api && unlockableAmount && !unlockableAmount.isZero()
+              ? `${api.createType('Balance', unlockableAmount).toHuman()} can be unlocked`
+              : delegatedBalance && !delegatedBalance.isZero()
+                ? t('Locked as delegated')
+                : timeToUnlock === null ? '' : timeToUnlock}
+            width='50%'
+          />
+        </Grid>
       </Grid>
-      <Divider sx={{ bgcolor: 'secondary.main', height: '1px', my: '5px' }} />
       {showReview && !!classToUnlock?.length && api && lockedInRef && unlockableAmount && address &&
         <Review
           address={address}
