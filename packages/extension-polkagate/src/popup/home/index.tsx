@@ -3,9 +3,11 @@
 
 /* eslint-disable react/jsx-max-props-per-line */
 
+import { PoolService, PoolType, TradeRouter } from '@galacticcouncil/sdk';
 import { Container, Grid, useTheme } from '@mui/material';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import { AccountsStore } from '@polkadot/extension-base/stores';
 import keyring from '@polkadot/ui-keyring';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
@@ -33,6 +35,40 @@ export default function Home(): React.ReactElement {
   const [show, setShowAlert] = useState<boolean>(false);
   const [quickActionOpen, setQuickActionOpen] = useState<string | boolean>();
   const [hasActiveRecovery, setHasActiveRecovery] = useState<string | null | undefined>(); // if exists, include the account address
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    const _testChain = 'wss://hydradx-rococo-rpc.play.hydration.cloud';
+    const _mainChain = 'wss://rpc.hydradx.cloud';
+    // Initialize Polkadot API
+    const wsProvider = new WsProvider(_testChain);
+
+    const api = await ApiPromise.create({ provider: wsProvider });
+    // Initialize Trade Router
+    const poolService = new PoolService(api);
+    const tradeRouter = new TradeRouter(poolService, { includeOnly: [PoolType.Omni] });
+
+    const assets = await tradeRouter.getAllAssets();// .then((assets) => {
+    console.log('Assets on Omni Pool:', assets);
+
+    const pools = await tradeRouter.getPools();
+    console.log('pools on Omni Pool:', pools);
+
+    const polkadotId = assets.find(({ symbol }) => symbol === 'DOT')?.id as string;
+    const usdtId = assets.find(({ symbol }) => symbol === 'USDT')?.id as string;
+
+    tradeRouter.getAssetPairs(polkadotId).then((AssetPairs) => { // DOT id is 5
+      console.log('AssetPairs for Polkadot on Omni Pool:', AssetPairs);
+    }).catch(console.error);
+
+    tradeRouter.getAllPaths(polkadotId, usdtId).then((AllPaths) => {
+      console.log('AllPaths from DOT to USDT on Omni Pool:', AllPaths);
+    }).catch(console.error);
+
+    tradeRouter.getPoolFees(polkadotId, usdtId).then((fee) => { //feeAsset: string, pool: Pool
+      console.log('Fee from DOT to USDT on Omni Pool:', fee);
+    }).catch(console.error);
+  }, []);
 
   useEffect(() => {
     const isTestnetDisabled = window.localStorage.getItem('testnet_enabled') !== 'true';

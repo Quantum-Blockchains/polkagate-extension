@@ -2663,6 +2663,66 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@galacticcouncil/math-lbp@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@galacticcouncil/math-lbp@npm:0.2.1"
+  checksum: 441857c4517a765f57d916cd492949d4de9bd1445307c25611c01c3b87ad77cd2e39dcd79e59dd7e1390e38fd4d402ce64987e2ad22079711168906892f46128
+  languageName: node
+  linkType: hard
+
+"@galacticcouncil/math-omnipool@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@galacticcouncil/math-omnipool@npm:0.2.0"
+  checksum: 40f6af95461c7bf47a814196318207dcf6bf9f1b098aa60a5689a0b34747807fa3d3aaaefe8a9a1406d0211f3f8371c6b5e7ed5922f488a9bc59ece7c14783f7
+  languageName: node
+  linkType: hard
+
+"@galacticcouncil/math-stableswap@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "@galacticcouncil/math-stableswap@npm:0.2.1"
+  checksum: 22fe16badc94c35170523e4d39c6ca2835d3bb5fceb7dddb44812bff3b20c6b854c75d172fe4cd9a0c6849b12f7f10b20e34de63a9e7871b3caaf4bd3b9f2dda
+  languageName: node
+  linkType: hard
+
+"@galacticcouncil/math-xyk@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@galacticcouncil/math-xyk@npm:0.2.0"
+  checksum: 96a3ed6e501eec2cb9cbbcfc7bf664e8f353b1197bb6d321e988452bf19fa4a3dd9b0253e2250653bab84b06f617322d087d44cc783c60117637cd7d1ea2c651
+  languageName: node
+  linkType: hard
+
+"@galacticcouncil/sdk@npm:^0.7.2":
+  version: 0.7.2
+  resolution: "@galacticcouncil/sdk@npm:0.7.2"
+  dependencies:
+    "@galacticcouncil/math-lbp": ^0.2.1
+    "@galacticcouncil/math-omnipool": ^0.2.0
+    "@galacticcouncil/math-stableswap": ^0.2.1
+    "@galacticcouncil/math-xyk": ^0.2.0
+    "@thi.ng/cache": ^2.1.35
+    bignumber.js: ^9.1.0
+    lodash.clonedeep: ^4.5.0
+  peerDependencies:
+    "@polkadot/api": ^10.9.1
+    "@polkadot/api-augment": ^10.9.1
+    "@polkadot/api-base": ^10.9.1
+    "@polkadot/api-derive": ^10.9.1
+    "@polkadot/keyring": ^12.3.2
+    "@polkadot/rpc-augment": ^10.9.1
+    "@polkadot/rpc-core": ^10.9.1
+    "@polkadot/rpc-provider": ^10.9.1
+    "@polkadot/types": ^10.9.1
+    "@polkadot/types-augment": ^10.9.1
+    "@polkadot/types-codec": ^10.9.1
+    "@polkadot/types-create": ^10.9.1
+    "@polkadot/types-known": ^10.9.1
+    "@polkadot/util": ^12.3.2
+    "@polkadot/util-crypto": ^12.3.2
+    ethers: ^5.7.2
+  checksum: 1366f865e8cba4cfcac46d662c653d6b2dc49a8ecfcb21c500c56720cf1ad5df6b8d2aba568033e595c0b54e2ab1bbd57c912c4db997a3ee917fcc80f402e62f
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.0.1":
   version: 1.1.2
   resolution: "@gar/promisify@npm:1.1.2"
@@ -5308,6 +5368,139 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
   checksum: 4a54c8f56cc4a39b50803205f84f06280bb76521d6d5d4b3b36651d760c7c7752ef142d857d52aaf4fad4848ed7a8be49afc793a5dda105955d2f8bef24901ac
+  languageName: node
+  linkType: hard
+
+"@thi.ng/api@npm:^8.9.5":
+  version: 8.9.5
+  resolution: "@thi.ng/api@npm:8.9.5"
+  checksum: bab9b714bd5dad5271fad4a6425b29e3628b89b508ac4417dc3eeaded34dd1280d45aeb3787a01b1b8cb4cdcd451a03dd9a1859c581e5588e8ec7518f41cf28f
+  languageName: node
+  linkType: hard
+
+"@thi.ng/arrays@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "@thi.ng/arrays@npm:2.6.0"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+    "@thi.ng/checks": ^3.4.5
+    "@thi.ng/compare": ^2.2.0
+    "@thi.ng/equiv": ^2.1.30
+    "@thi.ng/errors": ^2.3.5
+    "@thi.ng/random": ^3.6.6
+  checksum: 4e1d09d70f9d9eebdc7d4120e5788c6e33485eca72ca27de7d270112e3fe99ddd17eb9c68bf5c610b5c81c0b36bc7cd0edd619d3fbfff7631994650acb3c300c
+  languageName: node
+  linkType: hard
+
+"@thi.ng/cache@npm:^2.1.35":
+  version: 2.1.66
+  resolution: "@thi.ng/cache@npm:2.1.66"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+    "@thi.ng/dcons": ^3.2.61
+    "@thi.ng/transducers": ^8.7.2
+  checksum: 41d186c63758ac0f0e6cdc591a9c595124df36cfad0862986513af4e54d0c08bdf3dbc5ad22a3f0640c410b8e6526be107e0d83626ace8fdf4baed780f3d499f
+  languageName: node
+  linkType: hard
+
+"@thi.ng/checks@npm:^3.4.5":
+  version: 3.4.5
+  resolution: "@thi.ng/checks@npm:3.4.5"
+  dependencies:
+    tslib: ^2.6.2
+  checksum: fcb4e4b5f0622a0a616cb8b33c46dd58c183a4655c373280cf4d6d9e577882cfe01b1fd6100a5a3f767719dd00f1ad88b8814a884b7ddb3d3646835ee7284016
+  languageName: node
+  linkType: hard
+
+"@thi.ng/compare@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@thi.ng/compare@npm:2.2.0"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+  checksum: 28155dfc79089c94e5a1504707d42bd47bca63f1dacbd163315753e00ac2cf6ceb76dea13cacc1366eb625d23dfe47a242ba66fc9dc456cef530609a9225d7f6
+  languageName: node
+  linkType: hard
+
+"@thi.ng/compose@npm:^2.1.41":
+  version: 2.1.41
+  resolution: "@thi.ng/compose@npm:2.1.41"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+    "@thi.ng/errors": ^2.3.5
+  checksum: 385c287f5034cf339591ada0b84bf85da76e2f545669c104441fc3745dea711294f446cebbe916c1a0bf2a3a97e3b5f4b18bebd3680dfad7cb654e349ed4369a
+  languageName: node
+  linkType: hard
+
+"@thi.ng/dcons@npm:^3.2.61":
+  version: 3.2.61
+  resolution: "@thi.ng/dcons@npm:3.2.61"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+    "@thi.ng/checks": ^3.4.5
+    "@thi.ng/compare": ^2.2.0
+    "@thi.ng/equiv": ^2.1.30
+    "@thi.ng/errors": ^2.3.5
+    "@thi.ng/random": ^3.6.6
+    "@thi.ng/transducers": ^8.7.2
+  checksum: 6cedb914eb6c0424d72a0e38ddbdd239c40a3c7465a4bd1ddbb8fc7f6b4421822ed68f507cfe8478edd08c75429d2c5c54c1b9043353bbab7f3b0f60a08a69ee
+  languageName: node
+  linkType: hard
+
+"@thi.ng/equiv@npm:^2.1.30":
+  version: 2.1.30
+  resolution: "@thi.ng/equiv@npm:2.1.30"
+  checksum: a20aa05a033890e86193d41b8d6bfd46cfb06434b589ad9e6f99cf8db293fe85dd20fbfeb31bb021bfcafb15cdfb3ff8a36c0b14b7833ea2af2ccb3c7d11ff91
+  languageName: node
+  linkType: hard
+
+"@thi.ng/errors@npm:^2.3.5":
+  version: 2.3.5
+  resolution: "@thi.ng/errors@npm:2.3.5"
+  checksum: b60b34929a748c5db5131bfae941833cb8c6b9ad779db7f1507f75b21729761688a438d590665b4617e44ef1a8760fecaf30d59f4344413d18ff70bca00cb962
+  languageName: node
+  linkType: hard
+
+"@thi.ng/hex@npm:^2.3.17":
+  version: 2.3.17
+  resolution: "@thi.ng/hex@npm:2.3.17"
+  checksum: 6144437c22951c2a91b66da01c85dfbbc40be1e0139773fc782876330cdf8717e6d246dba96ad7f0707ab0d37193b964a862c2e39c5b7bb2b809c79a439ce73a
+  languageName: node
+  linkType: hard
+
+"@thi.ng/math@npm:^5.6.1":
+  version: 5.6.1
+  resolution: "@thi.ng/math@npm:5.6.1"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+  checksum: 23f91ff9563fa2612bfd486b8da25b2008732c5fd4a73fecf8028520cfd04617b84ca7c1ef563359c761b2935f9f411bc8927371f51534a504ee31bbd0925850
+  languageName: node
+  linkType: hard
+
+"@thi.ng/random@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@thi.ng/random@npm:3.6.6"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+    "@thi.ng/checks": ^3.4.5
+    "@thi.ng/errors": ^2.3.5
+    "@thi.ng/hex": ^2.3.17
+  checksum: 76b4456ffd0976e23523be49a96511c3762b5f3b76b4092471daba1bdacaf9b01e096c0507972e44c2eca73769461bff5029330460940884f723c0360817b88f
+  languageName: node
+  linkType: hard
+
+"@thi.ng/transducers@npm:^8.7.2":
+  version: 8.7.2
+  resolution: "@thi.ng/transducers@npm:8.7.2"
+  dependencies:
+    "@thi.ng/api": ^8.9.5
+    "@thi.ng/arrays": ^2.6.0
+    "@thi.ng/checks": ^3.4.5
+    "@thi.ng/compare": ^2.2.0
+    "@thi.ng/compose": ^2.1.41
+    "@thi.ng/errors": ^2.3.5
+    "@thi.ng/math": ^5.6.1
+    "@thi.ng/random": ^3.6.6
+  checksum: e9b7012526ab04f0a7d87b7b80f8d08ec52aab08c5056dcaea28d5250afa190e1c5aa9222ab9c3aa08fefca49a860386a291885f4e636c61d19f1efa5dcf8eac
   languageName: node
   linkType: hard
 
@@ -8148,6 +8341,13 @@ __metadata:
   version: 9.0.1
   resolution: "bignumber.js@npm:9.0.1"
   checksum: 6e72f6069d9db32fc8d27561164de9f811b15f9144be61f323d8b36150a239eea50c92e20ba38af2ba5e717af10b8ef12db8f9948fe2ff02bf17ede5239d15d3
+  languageName: node
+  linkType: hard
+
+"bignumber.js@npm:^9.1.0":
+  version: 9.1.2
+  resolution: "bignumber.js@npm:9.1.2"
+  checksum: 582c03af77ec9cb0ebd682a373ee6c66475db94a4325f92299621d544aa4bd45cb45fd60001610e94aef8ae98a0905fa538241d9638d4422d57abbeeac6fadaf
   languageName: node
   linkType: hard
 
@@ -15200,6 +15400,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.clonedeep@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "lodash.clonedeep@npm:4.5.0"
+  checksum: 92c46f094b064e876a23c97f57f81fbffd5d760bf2d8a1c61d85db6d1e488c66b0384c943abee4f6af7debf5ad4e4282e74ff83177c9e63d8ff081a4837c3489
+  languageName: node
+  linkType: hard
+
 "lodash.debounce@npm:^4.0.8":
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
@@ -19142,6 +19349,7 @@ resolve@^2.0.0-next.3:
     "@babel/core": ^7.18.2
     "@emotion/react": ^11.9.0
     "@emotion/styled": ^11.8.1
+    "@galacticcouncil/sdk": ^0.7.2
     "@mui/icons-material": latest
     "@mui/lab": ^5.0.0-alpha.85
     "@mui/material": ^5.8.3
@@ -20846,6 +21054,13 @@ resolve@^2.0.0-next.3:
   version: 2.5.3
   resolution: "tslib@npm:2.5.3"
   checksum: 88902b309afaf83259131c1e13da1dceb0ad1682a213143a1346a649143924d78cf3760c448b84d796938fd76127183894f8d85cbb3bf9c4fddbfcc140c0003c
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "tslib@npm:2.6.2"
+  checksum: 329ea56123005922f39642318e3d1f0f8265d1e7fcb92c633e0809521da75eeaca28d2cf96d7248229deb40e5c19adf408259f4b9640afd20d13aecc1430f3ad
   languageName: node
   linkType: hard
 

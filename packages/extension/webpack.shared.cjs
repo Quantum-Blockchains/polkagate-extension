@@ -105,5 +105,8 @@ module.exports = (entry, alias = {}) => ({
       stream: require.resolve('stream-browserify')
     }
   },
-  watch: false
+  watch: false,
+  experiments: {
+    topLevelAwait: true
+  }
 });
